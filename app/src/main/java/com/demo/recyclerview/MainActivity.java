@@ -7,8 +7,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.demo.recyclerview.adapter.MyRecyclerviewAdapter;
+import com.demo.recyclerview.adapter.RecyclerItemClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +28,22 @@ public class MainActivity extends ActionBarActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        List<String> textList=new ArrayList<>();
+        final List<String> textList=new ArrayList<>();
         for (int i=1;i<11;i++)
             textList.add("card"+String.valueOf(i));
         MyRecyclerviewAdapter recyclerviewAdapter=new MyRecyclerviewAdapter(textList);
         recyclerView.setAdapter(recyclerviewAdapter);
+       recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+           @Override
+           public void onItemClick(View view, int position) {
+               Toast.makeText(getApplicationContext(),textList.get(position),Toast.LENGTH_LONG).show();
+           }
+
+           @Override
+           public void onItemLongClick(View view, int position) {
+
+           }
+       }));
     }
 
     @Override
